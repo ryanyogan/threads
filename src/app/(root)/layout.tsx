@@ -1,3 +1,7 @@
+import { BottomBar } from "@/components/shared/bottom-bar";
+import { LeftSidebar } from "@/components/shared/left-sidebar";
+import { RightSidebar } from "@/components/shared/right-sidebar";
+import { TopBar } from "@/components/shared/top-bar";
 import { cn } from "@/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
@@ -19,7 +23,21 @@ export default function AuthLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={cn(inter.className)}>{children}</body>
+        <body className={cn(inter.className)}>
+          <TopBar />
+
+          <main>
+            <LeftSidebar />
+
+            <section className="main-container">
+              <div className="w-full max-w-4xl">{children}</div>
+            </section>
+
+            <RightSidebar />
+          </main>
+
+          <BottomBar />
+        </body>
       </html>
     </ClerkProvider>
   );
