@@ -26,7 +26,7 @@ export default function AuthLayout({
         <body className={cn(inter.className)}>
           <TopBar />
 
-          <main>
+          <main className="flex flex-row">
             <LeftSidebar />
 
             <section className="main-container">
