@@ -59,3 +59,13 @@ export async function updateUser({
     throw new Error(`Failed to create/update user: ${error.message}`);
   }
 }
+
+export async function fetchUser(userId: string) {
+  try {
+    return await db.user.findFirst({
+      where: { clerkId: userId },
+    });
+  } catch (error: any) {
+    throw new Error(`Failed to create/update user: ${error.message}`);
+  }
+}
