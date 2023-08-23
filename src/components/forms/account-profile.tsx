@@ -1,10 +1,13 @@
 "use client";
 
+import { updateUser } from "@/lib/actions/user.actions";
 import { useUploadThing } from "@/lib/uploadthing";
 import { isBase64Image } from "@/lib/utils";
 import { userValidation } from "@/lib/validations/user";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { User } from "@prisma/client/edge";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -14,20 +17,15 @@ import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 
 interface Props {
-  user: {
-    id: string;
-    objectId: string;
-    username: string;
-    name: string;
-    bio: string;
-    image: string;
-  };
+  user: Pick<User, "id" | "username" | "name" | "bio" | "image">;
   btnTitle: string;
 }
 
 export default function AccountProfile({ user, btnTitle }: Props) {
   const [files, setFiles] = useState<File[]>([]);
   const { startUpload } = useUploadThing("media");
+  const pathname = usePathname();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof userValidation>>({
     resolver: zodResolver(userValidation),
@@ -50,7 +48,20 @@ export default function AccountProfile({ user, btnTitle }: Props) {
       }
     }
 
-    // TODO: Update the user profile
+    await updateUser({
+      userId: user.id,
+      username: values.username,
+      name: values.name,
+      bio: values.bio,
+      image: values.profile_photo,
+      path: pathname,
+    });
+
+    if (pathname === "/profile/edit") {
+      router.back();
+    } else {
+      router.push("/");
+    }
   }
 
   function handleImage(

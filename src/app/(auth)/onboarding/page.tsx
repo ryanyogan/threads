@@ -4,7 +4,6 @@ import { currentUser } from "@clerk/nextjs";
 export default async function Onboarding() {
   const user = await currentUser();
   const userInfo = {
-    _id: "",
     username: "",
     name: "",
     bio: "",
@@ -12,12 +11,11 @@ export default async function Onboarding() {
   };
 
   const userData = {
-    id: user?.id,
-    objectId: userInfo?._id,
-    username: userInfo?.username || user?.username,
+    id: user?.id!,
+    username: userInfo?.username || user?.username || "",
     name: userInfo?.name || user?.firstName || "",
     bio: userInfo?.bio || "",
-    image: userInfo?.image || user?.imageUrl,
+    image: userInfo?.image || user?.imageUrl || "",
   };
 
   return (
