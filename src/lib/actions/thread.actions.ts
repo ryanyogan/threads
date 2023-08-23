@@ -20,11 +20,11 @@ export async function createThread({
     await db.thread.create({
       data: {
         text,
-        community: {
-          connect: {
-            id: communityId,
-          },
-        },
+        //community: {
+          //connect: {
+            //id: communityId,
+        //  },
+        //},
         author: {
           connect: {
             id: author,
