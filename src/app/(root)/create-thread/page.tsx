@@ -3,6 +3,8 @@ import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
+export const runtime = "edge";
+
 export default async function CreateThread() {
   const user = await currentUser();
 
