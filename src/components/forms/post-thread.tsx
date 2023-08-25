@@ -63,7 +63,7 @@ export default function PostThread({ userId }: { userId: string }) {
         />
 
         <Button type="submit" className="bg-primary-500">
-          Post Thread
+          Make My Zoobie
         </Button>
       </form>
     </Form>

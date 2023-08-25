@@ -66,3 +66,29 @@ export async function fetchThreads(pageNumber = 1, pageSize = 20) {
     throw new Error(`Failed loading threads: ${error.message}`);
   }
 }
+
+export async function fetchThreadById(id: string) {
+  try {
+    if (!id) return null;
+
+    // TODO: Add Community
+    const thread = await db.thread.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        author: true,
+        children: {
+          include: {
+            author: true,
+          },
+        },
+        community: true,
+      },
+    });
+
+    return thread;
+  } catch (error: any) {
+    throw new Error(`An error occurred in fetchTheadById: ${error.message}`);
+  }
+}

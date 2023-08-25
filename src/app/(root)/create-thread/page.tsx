@@ -19,7 +19,7 @@ export default async function CreateThread() {
 
   return (
     <>
-      <h1 className="head-text">Create Thread</h1>
+      <h1 className="head-text">Make a Zoobie</h1>
       <PostThread userId={userInfo.id} />
     </>
   );
